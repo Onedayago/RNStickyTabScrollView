@@ -1,16 +1,16 @@
 
-#简介
+###简介
     原生封装的支持吸顶和tab切换的UI组件，支持自定义顶部，tab栏，和内容。
-#演示
+###演示
 
 ![](./img/1699156320780.gif)
 
 
-#使用教程
+###使用教程
     yarn add https://github.com/Onedayago/RNStickyTabScrollView
     cd ios 
     pod install
-#使用demo
+###使用demo
 
     import React, {useRef, useState} from "react";
     import {View, Text, ScrollView, TouchableOpacity, Animated, Dimensions} from "react-native";
@@ -184,17 +184,17 @@
 
     export default App;
 
-#组件属性
+###组件属性
 
-|    Prop | Default | TYPE | Description |
-|-----|---------|------|-------------|
-|   data  | 无       | 数组   | 分页内容        |
-|   containerHeight  | 无       | 数字   | 容器总高度       |
-|   containerWidth  | 无       | 数字   | 容器总宽度       |
-|   Header  | 无       | 组件   | 顶部组件        |
-|   Tab  | 无       | 组件   | 渲染自定义Tab    |
-|   PageContent  | 无       | 组件   | 渲染分页内容      |
-|   onPageChange  | 无       | 函数   | 页面切换回调      |
+| Prop            | Default | TYPE | Description |
+|-----------------|---------|------|-------------|
+| data            | 无       | 数组   | 分页内容        |
+| containerHeight | 无       | 数字   | 容器总高度       |
+| containerWidth  | 无       | 数字   | 容器总宽度       |
+| Header          | 无       | 组件   | 顶部组件        |
+| Tab             | 无       | 组件   | 渲染自定义Tab    |
+| PageContent     | 无       | 组件   | 渲染分页内容      |
+| onPageChange    | 无       | 函数   | 页面切换回调      |
 
 
 
