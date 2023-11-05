@@ -17,13 +17,13 @@
     "!**/__mocks__"
   ],
   "keywords": ["react-native", "ios", "android"],
-  "repository": "https://github.com/<your_github_handle>/rnnestedscrollview",
+  "repository": "https://github.com/Onedayago/RNStickyTabScrollView",
   "author": "(https://github.com/<your_github_handle>)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/<your_github_handle>/rnnestedscrollview/issues"
+    "url": "https://https://github.com/Onedayago/RNStickyTabScrollView/issues"
   },
-  "homepage": "https://github.com/<your_github_handle>/rnnestedscrollview#readme",
+  "homepage": "https://https://github.com/Onedayago/RNStickyTabScrollView#readme",
   "devDependencies": {},
   "peerDependencies": {
     "react": "*",
