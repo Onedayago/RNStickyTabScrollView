@@ -16,6 +16,20 @@
 namespace facebook {
 namespace react {
 
+class JSI_EXPORT RNPageScrollViewProps final : public ViewProps {
+ public:
+  RNPageScrollViewProps() = default;
+  RNPageScrollViewProps(const PropsParserContext& context, const RNPageScrollViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  Float contentWidth{0.0};
+  bool bounce{false};
+  bool showsIndicator{false};
+  Float width{0.0};
+  Float height{0.0};
+};
+
 class JSI_EXPORT RNScrollViewProps final : public ViewProps {
  public:
   RNScrollViewProps() = default;
@@ -23,8 +37,12 @@ class JSI_EXPORT RNScrollViewProps final : public ViewProps {
 
 #pragma mark - Props
 
-  Float contentHeight{0.0};
   Float stickyHeight{0.0};
+  Float contentHeight{0.0};
+  bool bounce{false};
+  bool showsIndicator{false};
+  Float width{0.0};
+  Float height{0.0};
 };
 
 } // namespace react

@@ -18,6 +18,7 @@
 Class<RCTComponentViewProtocol> RCTThirdPartyFabricComponentsProvider(const char *name) {
   static std::unordered_map<std::string, Class (*)(void)> sFabricComponentsClassMap = {
 
+    {"RNPageScrollView", RNPageScrollViewCls}, // RNScrollViewSpecs,
     {"RNScrollView", RNScrollViewCls}, // RNScrollViewSpecs
   };
 

@@ -19,6 +19,17 @@
 namespace facebook {
 namespace react {
 
+JSI_EXPORT extern const char RNPageScrollViewComponentName[];
+
+/*
+ * `ShadowNode` for <RNPageScrollView> component.
+ */
+using RNPageScrollViewShadowNode = ConcreteViewShadowNode<
+    RNPageScrollViewComponentName,
+    RNPageScrollViewProps,
+    RNPageScrollViewEventEmitter,
+    RNPageScrollViewState>;
+
 JSI_EXPORT extern const char RNScrollViewComponentName[];
 
 /*

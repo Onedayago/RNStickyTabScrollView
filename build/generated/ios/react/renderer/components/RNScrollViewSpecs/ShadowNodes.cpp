@@ -13,6 +13,7 @@
 namespace facebook {
 namespace react {
 
+extern const char RNPageScrollViewComponentName[] = "RNPageScrollView";
 extern const char RNScrollViewComponentName[] = "RNScrollView";
 
 } // namespace react

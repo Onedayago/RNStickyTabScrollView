@@ -15,13 +15,28 @@
 namespace facebook {
 namespace react {
 
-class JSI_EXPORT RNScrollViewEventEmitter : public ViewEventEmitter {
+class JSI_EXPORT RNPageScrollViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
 
   
+};
+class JSI_EXPORT RNScrollViewEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnScrollE {
+      Float x;
+    Float y;
+    };
+
+  struct OnScroll {
+      OnScrollE e;
+    };
+
+  void onScroll(OnScroll value) const;
 };
 
 } // namespace react

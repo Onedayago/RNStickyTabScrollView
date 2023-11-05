@@ -13,6 +13,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol RCTRNPageScrollViewViewProtocol <NSObject>
+
+@end
+
 @protocol RCTRNScrollViewViewProtocol <NSObject>
 
 @end

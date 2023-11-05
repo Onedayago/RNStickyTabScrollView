@@ -17,6 +17,21 @@
 namespace facebook {
 namespace react {
 
+class RNPageScrollViewState {
+public:
+  RNPageScrollViewState() = default;
+
+#ifdef ANDROID
+  RNPageScrollViewState(RNPageScrollViewState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
+  };
+  MapBuffer getMapBuffer() const {
+    return MapBufferBuilder::EMPTY();
+  };
+#endif
+};
+
 class RNScrollViewState {
 public:
   RNScrollViewState() = default;

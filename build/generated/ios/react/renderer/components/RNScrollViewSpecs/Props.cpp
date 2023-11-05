@@ -15,13 +15,28 @@
 namespace facebook {
 namespace react {
 
+RNPageScrollViewProps::RNPageScrollViewProps(
+    const PropsParserContext &context,
+    const RNPageScrollViewProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    contentWidth(convertRawProp(context, rawProps, "contentWidth", sourceProps.contentWidth, {0.0})),
+    bounce(convertRawProp(context, rawProps, "bounce", sourceProps.bounce, {false})),
+    showsIndicator(convertRawProp(context, rawProps, "showsIndicator", sourceProps.showsIndicator, {false})),
+    width(convertRawProp(context, rawProps, "width", sourceProps.width, {0.0})),
+    height(convertRawProp(context, rawProps, "height", sourceProps.height, {0.0}))
+      {}
 RNScrollViewProps::RNScrollViewProps(
     const PropsParserContext &context,
     const RNScrollViewProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
+    stickyHeight(convertRawProp(context, rawProps, "stickyHeight", sourceProps.stickyHeight, {0.0})),
     contentHeight(convertRawProp(context, rawProps, "contentHeight", sourceProps.contentHeight, {0.0})),
-    stickyHeight(convertRawProp(context, rawProps, "stickyHeight", sourceProps.stickyHeight, {0.0}))
+    bounce(convertRawProp(context, rawProps, "bounce", sourceProps.bounce, {false})),
+    showsIndicator(convertRawProp(context, rawProps, "showsIndicator", sourceProps.showsIndicator, {false})),
+    width(convertRawProp(context, rawProps, "width", sourceProps.width, {0.0})),
+    height(convertRawProp(context, rawProps, "height", sourceProps.height, {0.0}))
       {}
 
 } // namespace react

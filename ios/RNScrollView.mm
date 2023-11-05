@@ -1,6 +1,7 @@
 
 
 #import "RNScrollView.h"
+#import "RNPageScrollView.h"
 #import <react/renderer/components/RNScrollViewSpecs/ComponentDescriptors.h>
 #import <react/renderer/components/RNScrollViewSpecs/EventEmitters.h>
 #import <react/renderer/components/RNScrollViewSpecs/Props.h>
@@ -11,18 +12,11 @@
 
 using namespace facebook::react;
 
-@interface MyScrollView : UIScrollView
-
-@end
 
 @implementation MyScrollView
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    if(gestureRecognizer.state !=0 ){
-        NSLog(@"it works");
-        return true;
-    }
-    return false;
+    return true;
 
 }
 
@@ -30,8 +24,6 @@ using namespace facebook::react;
 
 @interface RNScrollView () <RCTRNScrollViewViewProtocol, UIScrollViewDelegate>
 
-@property MyScrollView *scrollView;
-@property  CGFloat lastContainerY;
 @end
 
 @implementation RNScrollView  {
@@ -39,6 +31,7 @@ using namespace facebook::react;
     NSMutableArray *containerScrollView;
     CGFloat lastRootY;
     CGFloat stickyHeight;
+    RNPageScrollView *pageScrollView;
 }
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
@@ -56,30 +49,51 @@ using namespace facebook::react;
       self.contentView = self.scrollView;
       self.scrollView.delegate = self;
       self.scrollView.bounces = false;
+      self.scrollView.directionalLockEnabled = true;
       containerScrollView = [[NSMutableArray alloc]init];
+      self.scrollView.showsVerticalScrollIndicator = false;
+      self.scrollView.showsHorizontalScrollIndicator = false;
   }
 
   return self;
 }
 
-
+- (void)updateLayoutMetrics:(facebook::react::LayoutMetrics const &)layoutMetrics
+           oldLayoutMetrics:(facebook::react::LayoutMetrics const &)oldLayoutMetrics
+{
+    [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
+}
 
 - (void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView index:(NSInteger)index
 {
-    if([childComponentView isKindOfClass:[RNScrollView class]]){
-        RNScrollView *scrollView = (RNScrollView *)childComponentView;
-        [containerScrollView addObject:scrollView];
-        [scrollView scrollView].delegate = self;
 
+    if([childComponentView isKindOfClass:[RNPageScrollView class]]){
+        pageScrollView = (RNPageScrollView *)childComponentView;
+        pageScrollView.parentView = self;
+        for(RNScrollView *myScrollView in pageScrollView.containerScrollView){
+
+            myScrollView.scrollView.delegate = self;
+            [containerScrollView addObject:myScrollView];
+        }
     }
+
+    if(index == 0){
+        self.firstView = childComponentView;
+        self.scrollView.contentSize = CGSizeMake(childComponentView.frame.size.width, childComponentView.frame.size.height);
+    }else{
+        self.scrollView.contentSize = CGSizeMake(self.firstView.frame.size.width, self.firstView.frame.size.height);
+        NSLog(@"%f",self.firstView.frame.size.height);
+    }
+
   [_scrollView insertSubview:childComponentView atIndex:index];
 }
-
 
 
 - (void)unmountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView index:(NSInteger)index
 {
   [childComponentView removeFromSuperview];
+    self.scrollView.contentSize = CGSizeMake(self.firstView.frame.size.width, self.firstView.frame.size.height);
+    NSLog(@"%f",self.firstView.frame.size.height);
 }
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
@@ -95,9 +109,19 @@ using namespace facebook::react;
         stickyHeight = newViewProps.stickyHeight;
     }
 
+    if (oldViewProps.bounce != newViewProps.bounce) {
+        self.scrollView.bounces = newViewProps.bounce;
+    }
+
+    if (oldViewProps.showsIndicator != newViewProps.showsIndicator) {
+        self.scrollView.showsVerticalScrollIndicator = newViewProps.showsIndicator;
+        self.scrollView.showsHorizontalScrollIndicator = newViewProps.showsIndicator;
+    }
+
 
   [super updateProps:props oldProps:oldProps];
 }
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -111,6 +135,7 @@ using namespace facebook::react;
                 self.scrollView.contentOffset = CGPointMake(0, stickyHeight);
             }else{
                 self.scrollView.contentOffset = CGPointMake(0, 0);
+
             }
 
         } else{
@@ -129,15 +154,22 @@ using namespace facebook::react;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    pageScrollView.scrollView.scrollEnabled = false;
     if (scrollView == self.scrollView) {
         lastRootY = self.scrollView.contentOffset.y;
-    }else {
+    }
+    else {
         for(RNScrollView *myScrollView in containerScrollView){
             if(scrollView == myScrollView.scrollView){
                 myScrollView.lastContainerY = scrollView.contentOffset.y;
             }
         }
     }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    pageScrollView.scrollView.scrollEnabled = true;
 }
 
 @end

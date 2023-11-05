@@ -3,8 +3,8 @@
   "name": "rn-scrollview",
   "version": "0.0.1",
   "description": "Showcase a Fabric component with a centered text",
-  "react-native": "js/index",
-  "source": "js/index",
+  "react-native": "index",
+  "source": "index",
   "files": [
     "js",
     "android",

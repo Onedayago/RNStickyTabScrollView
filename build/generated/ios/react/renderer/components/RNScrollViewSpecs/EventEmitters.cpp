@@ -14,6 +14,19 @@ namespace facebook {
 namespace react {
 
 
+void RNScrollViewEventEmitter::onScroll(OnScroll event) const {
+  dispatchEvent("scroll", [event=std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    {
+              auto e = jsi::Object(runtime);
+              e.setProperty(runtime, "x", event.e.x);
+e.setProperty(runtime, "y", event.e.y);
+
+              payload.setProperty(runtime, "e", e);
+            }
+    return payload;
+  });
+}
 
 } // namespace react
 } // namespace facebook

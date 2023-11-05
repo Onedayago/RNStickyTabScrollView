@@ -19,6 +19,7 @@ extern "C" {
 
 Class<RCTComponentViewProtocol> RCTThirdPartyFabricComponentsProvider(const char *name);
 
+Class<RCTComponentViewProtocol> RNPageScrollViewCls(void) __attribute__((used)); // RNScrollViewSpecs
 Class<RCTComponentViewProtocol> RNScrollViewCls(void) __attribute__((used)); // RNScrollViewSpecs
 
 #ifdef __cplusplus
