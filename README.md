@@ -2,7 +2,10 @@
 #简介
     原生封装的支持吸顶和tab切换的UI组件，支持自定义顶部，tab栏，和内容。
 #演示
+
 ![](./img/1699156320780.gif)
+
+
 #使用教程
     yarn add https://github.com/Onedayago/RNStickyTabScrollView
     cd ios 
