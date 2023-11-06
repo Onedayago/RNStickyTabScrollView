@@ -57,13 +57,13 @@ using namespace facebook::react;
       self.scrollView.contentSize = CGSizeMake(newViewProps.contentWidth, self.frame.size.height);
   }
 
-    if (oldViewProps.bounce != newViewProps.bounce) {
-        self.scrollView.bounces = newViewProps.bounce;
+    if (oldViewProps.bounces != newViewProps.bounces) {
+        self.scrollView.bounces = newViewProps.bounces;
     }
 
-    if (oldViewProps.showsIndicator != newViewProps.showsIndicator) {
-        self.scrollView.showsVerticalScrollIndicator = newViewProps.showsIndicator;
-        self.scrollView.showsHorizontalScrollIndicator = newViewProps.showsIndicator;
+    if (oldViewProps.showIndicator != newViewProps.showIndicator) {
+        self.scrollView.showsVerticalScrollIndicator = newViewProps.showIndicator;
+        self.scrollView.showsHorizontalScrollIndicator = newViewProps.showIndicator;
     }
 
   [super updateProps:props oldProps:oldProps];

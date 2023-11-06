@@ -6,7 +6,7 @@ import ScrollView from "./ScrollView";
 import RNPageScrollView, {Commands} from "rn-scrollview/js/RNPageScrollViewNativeComponent";
 import PropTypes from 'prop-types';
 
-const ScrollContainer = forwardRef((props, ref) => {
+const ScrollContainerIos = forwardRef((props, ref) => {
 
     const {containerHeight, containerWidth, Header, data, Tab, PageContent, onPageChange} = props;
     const [stickyHeight, setStickyHeight] = useState(0);
@@ -86,7 +86,7 @@ const ScrollContainer = forwardRef((props, ref) => {
     )
 });
 
-ScrollContainer.defaultProps = {
+ScrollContainerIos.defaultProps = {
     containerHeight: 0,
     containerWidth: 0,
     Header: ()=>{},
@@ -96,7 +96,7 @@ ScrollContainer.defaultProps = {
     onPageChange: ()=>{},
 }
 
-ScrollContainer.propTypes = {
+ScrollContainerIos.propTypes = {
     containerHeight: PropTypes.number.isRequired,
     containerWidth: PropTypes.number.isRequired,
     Header: PropTypes.func.isRequired,
@@ -106,4 +106,4 @@ ScrollContainer.propTypes = {
     onPageChange: PropTypes.func,
 }
 
-export default ScrollContainer;
+export default ScrollContainerIos;

@@ -11,8 +11,8 @@ type ScrollEvent = Readonly<{
 
 export interface NativeProps extends ViewProps {
     contentWidth: Float,
-    bounce: boolean,
-    showsIndicator: boolean,
+    bounces: boolean,
+    showIndicator: boolean,
     width: Float,
     height: Float,
     onScroll: DirectEventHandler<ScrollEvent>,

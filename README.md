@@ -1,6 +1,6 @@
 
 ### 简介
-    原生封装的支持吸顶和tab切换的UI组件，支持自定义顶部，tab栏，和内容。
+    react native fabric,原生封装的支持吸顶和tab切换的UI组件，支持自定义顶部，tab栏，和内容
 ### 演示
 
 ![](./img/1699156320780.gif)
@@ -14,7 +14,7 @@
 
     import React, {useRef, useState} from "react";
     import {View, Text, ScrollView, TouchableOpacity, Animated, Dimensions} from "react-native";
-    import ScrollContainer from "rn-scrollview";
+    import ScrollContainerIos from "rn-scrollview";
     const window = Dimensions.get("window");
     const width = window.width;
 
@@ -164,7 +164,7 @@
 
     return(
         <View style={{marginTop: 100}}>
-            <ScrollContainer
+            <ScrollContainerIos
                 data={[1,2]}
                 containerHeight={400}
                 containerWidth={width}
@@ -177,7 +177,7 @@
                 }}
             >
 
-            </ScrollContainer>
+            </ScrollContainerIos>
         </View>
     )
     }

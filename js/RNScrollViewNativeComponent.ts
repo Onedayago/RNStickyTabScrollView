@@ -11,8 +11,8 @@ type ScrollEvent = Readonly<{
 export interface NativeProps extends ViewProps {
     stickyHeight: Float,
     contentHeight: Float,
-    bounce: boolean,
-    showsIndicator: boolean,
+    bounces: boolean,
+    showIndicator: boolean,
     width: Float,
     height: Float,
 }
