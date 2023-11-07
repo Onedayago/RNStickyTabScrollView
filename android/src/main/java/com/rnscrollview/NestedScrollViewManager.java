@@ -9,6 +9,7 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ViewManagerDelegate;
+import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.viewmanagers.RNScrollViewManagerDelegate;
 import com.facebook.react.viewmanagers.RNScrollViewManagerInterface;
 
@@ -42,6 +43,7 @@ public class NestedScrollViewManager extends ViewGroupManager<NestedScrollView> 
     }
 
     @Override
+    @ReactProp(name = "stickyHeight")
     public void setStickyHeight(NestedScrollView view, float value) {
         view.setStickyHeight(value);
     }

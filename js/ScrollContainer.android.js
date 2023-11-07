@@ -32,9 +32,11 @@ const ScrollContainerIos = forwardRef((props, ref) => {
 
     const renderPage = (item, index) => {
         return(
-            <View style={{width: containerWidth, height: containerHeight, overflow: 'hidden'}}  key={index}>
-                <RNScrollView style={{width: containerWidth, height: containerHeight}} >
-                    {PageContent?.(item, index)}
+            <View style={{width: containerWidth, height: containerHeight-tabHeight, overflow: 'hidden'}}  key={index}>
+                <RNScrollView style={{width: containerWidth, height: containerHeight-tabHeight}} >
+                    <View collapsable={false}>
+                        {PageContent?.(item, index)}
+                    </View>
                 </RNScrollView>
             </View>
 
@@ -51,7 +53,7 @@ const ScrollContainerIos = forwardRef((props, ref) => {
                     onPageChange(Math.round(e.nativeEvent.contentOffset.x/containerWidth));
                 }}
             >
-                <View style={{flexDirection: 'row', height: containerHeight}}>
+                <View style={{flexDirection: 'row', height: containerHeight-tabHeight}}>
                     {
                         data.map((item, index)=>{
                             return renderPage(item, index);
@@ -73,14 +75,14 @@ const ScrollContainerIos = forwardRef((props, ref) => {
     }
 
     return(
-        <View style={{width: containerWidth, height: containerHeight+tabHeight, overflow: 'hidden'}}>
+        <View style={{width: containerWidth, height: containerHeight, overflow: 'hidden'}}>
             <RNScrollView
-                style={{width: containerWidth, height: containerHeight+tabHeight}}
+                style={{width: containerWidth, height: containerHeight}}
                 stickyHeight={stickyHeight}
                 showsIndicator={false}
                 bounce={false}
             >
-                <View style={{backgroundColor: 'red'}}>
+                <View  collapsable={false}>
                     {renderHeader()}
                     {renderTab()}
                     {renderContent()}

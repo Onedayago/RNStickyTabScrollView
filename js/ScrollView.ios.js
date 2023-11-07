@@ -16,7 +16,7 @@ const ScrollView = (props) => {
             showsIndicator={false}
             bounce={false}
         >
-            <View style={{backgroundColor: 'white'}} onLayout={(e)=>{
+            <View onLayout={(e)=>{
                 setContentHeight(e.nativeEvent.layout.height);
             }}>
                 {children}

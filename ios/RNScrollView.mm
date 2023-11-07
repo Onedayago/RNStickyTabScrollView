@@ -77,13 +77,13 @@ using namespace facebook::react;
         }
     }
 
-    if(index == 0){
-        self.firstView = childComponentView;
-        self.scrollView.contentSize = CGSizeMake(childComponentView.frame.size.width, childComponentView.frame.size.height);
-    }else{
-        self.scrollView.contentSize = CGSizeMake(self.firstView.frame.size.width, self.firstView.frame.size.height);
-        NSLog(@"%f",self.firstView.frame.size.height);
-    }
+//    if(index == 0){
+//        self.firstView = childComponentView;
+//        self.scrollView.contentSize = CGSizeMake(childComponentView.frame.size.width, childComponentView.frame.size.height);
+//    }else{
+//        self.scrollView.contentSize = CGSizeMake(self.firstView.frame.size.width, self.firstView.frame.size.height);
+//        NSLog(@"%f",self.firstView.frame.size.height);
+//    }
 
   [_scrollView insertSubview:childComponentView atIndex:index];
 }
@@ -92,8 +92,8 @@ using namespace facebook::react;
 - (void)unmountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView index:(NSInteger)index
 {
   [childComponentView removeFromSuperview];
-    self.scrollView.contentSize = CGSizeMake(self.firstView.frame.size.width, self.firstView.frame.size.height);
-    NSLog(@"%f",self.firstView.frame.size.height);
+//    self.scrollView.contentSize = CGSizeMake(self.firstView.frame.size.width, self.firstView.frame.size.height);
+//    NSLog(@"%f",self.firstView.frame.size.height);
 }
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
@@ -170,6 +170,15 @@ using namespace facebook::react;
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     pageScrollView.scrollView.scrollEnabled = true;
+}
+
+- (void)prepareForRecycle{
+    self.scrollView.contentOffset = CGPointMake(0, 0);
+
+    for(RNScrollView *myScrollView in containerScrollView){
+        myScrollView.scrollView.contentOffset = CGPointMake(0, 0);
+    }
+    [super prepareForRecycle];
 }
 
 @end

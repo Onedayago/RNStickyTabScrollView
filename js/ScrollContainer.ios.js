@@ -11,6 +11,7 @@ const ScrollContainerIos = forwardRef((props, ref) => {
     const {containerHeight, containerWidth, Header, data, Tab, PageContent, onPageChange} = props;
     const [stickyHeight, setStickyHeight] = useState(0);
     const [tabHeight, setTabHeight] = useState(0);
+    const [contentHeight, setContentHeight] = useState(0);
     const tabScroll = useRef(null);
 
     useImperativeHandle(ref,()=>({
@@ -31,7 +32,7 @@ const ScrollContainerIos = forwardRef((props, ref) => {
 
     const renderPage = (item, index) => {
         return(
-            <ScrollView key={index} containerWidth={containerWidth} containerHeight={containerHeight}>
+            <ScrollView key={index} containerWidth={containerWidth} containerHeight={containerHeight-tabHeight}>
                 {PageContent?.(item, index)}
             </ScrollView>
         )
@@ -42,14 +43,14 @@ const ScrollContainerIos = forwardRef((props, ref) => {
             <RNPageScrollView
                 showsIndicator={false}
                 bounce={false}
-                style={{width: containerWidth, height: containerHeight}}
-                contentWidth={containerWidth*2}
+                style={{width: containerWidth, height: containerHeight-tabHeight}}
+                contentWidth={containerWidth*data.length}
                 onScroll={(e)=>{
                     onPageChange(parseInt(e.nativeEvent.x/containerWidth));
                 }}
                 ref={tabScroll}
             >
-                <View style={{flexDirection: 'row', height: containerHeight}}>
+                <View style={{flexDirection: 'row', height: containerHeight-tabHeight}}>
                     {
                         data.map((item, index)=>{
                             return renderPage(item, index);
@@ -72,12 +73,15 @@ const ScrollContainerIos = forwardRef((props, ref) => {
 
     return(
         <RNScrollView
-            style={{width: containerWidth, height: containerHeight+tabHeight}}
+            style={{width: containerWidth, height: containerHeight}}
             stickyHeight={stickyHeight}
             showsIndicator={false}
             bounce={false}
+            contentHeight={contentHeight}
         >
-            <View style={{backgroundColor: 'red'}}>
+            <View onLayout={(e)=>{
+                setContentHeight(e.nativeEvent.layout.height);
+            }}>
                 {renderHeader()}
                 {renderTab()}
                 {renderContent()}

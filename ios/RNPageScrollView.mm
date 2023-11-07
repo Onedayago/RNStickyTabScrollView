@@ -133,6 +133,11 @@ using namespace facebook::react;
     [self.scrollView setContentOffset:offset animated:true];
 }
 
+- (void)prepareForRecycle{
+    self.scrollView.contentOffset = CGPointMake(0, 0);
+    [super prepareForRecycle];
+}
+
 
 
 @end
