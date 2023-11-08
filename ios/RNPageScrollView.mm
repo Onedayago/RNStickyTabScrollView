@@ -42,6 +42,7 @@ using namespace facebook::react;
       self.containerScrollView = [[NSMutableArray alloc]init];
       self.scrollView.showsVerticalScrollIndicator = false;
       self.scrollView.showsHorizontalScrollIndicator = false;
+      self.scrollView.scrollEnabled = false;
   }
 
   return self;
