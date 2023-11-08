@@ -50,6 +50,8 @@ const ScrollContainerIos = forwardRef((props, ref) => {
             <ScrollView
                 horizontal={true}
                 pagingEnabled={false}
+                scrollEnabled={false}
+                showsHorizontalScrollIndicator={false}
                 ref={tabScroll}
                 onMomentumScrollEnd={(e)=>{
                     onPageChange(Math.round(e.nativeEvent.contentOffset.x/containerWidth));
