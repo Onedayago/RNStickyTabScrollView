@@ -14,5 +14,7 @@ RCT_EXPORT_VIEW_PROPERTY(width, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(stickyHeight, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(height, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(contentHeight, NSNumber)
-
+RCT_EXPORT_VIEW_PROPERTY(bounces, NSBoolean)
+RCT_EXPORT_VIEW_PROPERTY(showIndicator, NSBoolean)
+RCT_EXPORT_VIEW_PROPERTY(scrollEnable, NSBoolean)
 @end

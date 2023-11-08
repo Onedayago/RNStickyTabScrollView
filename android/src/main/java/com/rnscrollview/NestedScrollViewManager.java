@@ -73,4 +73,9 @@ public class NestedScrollViewManager extends ViewGroupManager<NestedScrollView> 
 
     }
 
+    @Override
+    public void setScrollEnable(NestedScrollView view, boolean value) {
+
+    }
+
 }

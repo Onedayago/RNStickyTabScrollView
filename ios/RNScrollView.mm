@@ -113,6 +113,10 @@ using namespace facebook::react;
         self.scrollView.bounces = newViewProps.bounces;
     }
 
+    if (oldViewProps.scrollEnable != newViewProps.scrollEnable) {
+        self.scrollView.scrollEnable = newViewProps.scrollEnable;
+    }
+
     if (oldViewProps.showIndicator != newViewProps.showIndicator) {
         self.scrollView.showsVerticalScrollIndicator = newViewProps.showIndicator;
         self.scrollView.showsHorizontalScrollIndicator = newViewProps.showIndicator;

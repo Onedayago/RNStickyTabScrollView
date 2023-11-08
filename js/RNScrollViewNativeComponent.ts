@@ -15,6 +15,7 @@ export interface NativeProps extends ViewProps {
     showIndicator: boolean,
     width: Float,
     height: Float,
+    scrollEnable?: boolean,
 }
 
 export default codegenNativeComponent<NativeProps>(

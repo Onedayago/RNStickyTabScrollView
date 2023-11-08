@@ -14,8 +14,9 @@ RCT_EXPORT_MODULE(RNPageScrollView)
 RCT_EXPORT_VIEW_PROPERTY(width, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(height, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(contentWidth, NSNumber)
-RCT_EXPORT_VIEW_PROPERTY(bounce, NSBoolean)
-RCT_EXPORT_VIEW_PROPERTY(showsIndicator, NSBoolean)
+RCT_EXPORT_VIEW_PROPERTY(bounces, NSBoolean)
+RCT_EXPORT_VIEW_PROPERTY(showIndicator, NSBoolean)
+RCT_EXPORT_VIEW_PROPERTY(scrollEnable, NSBoolean)
 RCT_EXPORT_VIEW_PROPERTY(onScroll, RCTDirectEventBlock)
 
 @end
