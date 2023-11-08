@@ -102,7 +102,11 @@ using namespace facebook::react;
   const auto &newViewProps = *std::static_pointer_cast<RNScrollViewProps const>(props);
 
   if (oldViewProps.contentHeight != newViewProps.contentHeight) {
-      self.scrollView.contentSize = CGSizeMake(self.frame.size.width, newViewProps.contentHeight);
+      if(newViewProps.contentHeight < self.frame.size.height){
+          self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height);
+      }else{
+          self.scrollView.contentSize = CGSizeMake(self.frame.size.width, newViewProps.contentHeight);
+      }
   }
 
     if (oldViewProps.stickyHeight != newViewProps.stickyHeight) {
@@ -158,7 +162,7 @@ using namespace facebook::react;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    pageScrollView.scrollView.scrollEnabled = false;
+//    pageScrollView.scrollView.scrollEnabled = false;
     if (scrollView == self.scrollView) {
         lastRootY = self.scrollView.contentOffset.y;
     }
@@ -173,7 +177,7 @@ using namespace facebook::react;
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    pageScrollView.scrollView.scrollEnabled = true;
+//    pageScrollView.scrollView.scrollEnabled = true;
 }
 
 - (void)prepareForRecycle{

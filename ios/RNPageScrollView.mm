@@ -35,7 +35,7 @@ using namespace facebook::react;
       self.scrollView = [[MyScrollView alloc] initWithFrame:self.bounds];
       self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
       self.contentView = self.scrollView;
-      self.scrollView.pagingEnabled = true;
+      self.scrollView.pagingEnabled = false;
       self.scrollView.bounces = false;
       self.scrollView.delegate = self;
       self.scrollView.directionalLockEnabled = true;
