@@ -16,6 +16,7 @@ export interface NativeProps extends ViewProps {
     width: Float,
     height: Float,
     onScroll: DirectEventHandler<ScrollEvent>,
+    scrollEnable?: boolean,
 }
 
 interface NativeCommands {

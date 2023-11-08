@@ -114,7 +114,7 @@ using namespace facebook::react;
     }
 
     if (oldViewProps.scrollEnable != newViewProps.scrollEnable) {
-        self.scrollView.scrollEnable = newViewProps.scrollEnable;
+        self.scrollView.scrollEnabled = newViewProps.scrollEnable;
     }
 
     if (oldViewProps.showIndicator != newViewProps.showIndicator) {

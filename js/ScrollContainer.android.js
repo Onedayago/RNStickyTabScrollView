@@ -1,14 +1,16 @@
 
 import React, {useRef, useState, forwardRef, useImperativeHandle} from "react";
-import {Text, View, TouchableOpacity, Animated, ScrollView} from "react-native";
+import {Text, View, TouchableOpacity, Animated, ScrollView, StyleSheet} from "react-native";
 import RNScrollView from "rn-scrollview/js/RNScrollViewNativeComponent";
 import PropTypes from 'prop-types';
 
 const ScrollContainerIos = forwardRef((props, ref) => {
 
-    const {containerHeight, containerWidth, Header, data, Tab, PageContent, onPageChange} = props;
+    const {Header, data, Tab, PageContent, onPageChange} = props;
     const [stickyHeight, setStickyHeight] = useState(0);
     const [tabHeight, setTabHeight] = useState(0);
+    const [containerWidth, setW] = useState(0);
+    const [containerHeight, setH] = useState(0);
     const tabScroll = useRef(null);
 
     useImperativeHandle(ref,()=>({
@@ -75,7 +77,10 @@ const ScrollContainerIos = forwardRef((props, ref) => {
     }
 
     return(
-        <View style={{width: containerWidth, height: containerHeight, overflow: 'hidden'}}>
+        <View style={styles.container} onLayout={(e)=>{
+            setW(e.nativeEvent.layout.width);
+            setH(e.nativeEvent.layout.height);
+        }}>
             <RNScrollView
                 style={{width: containerWidth, height: containerHeight}}
                 stickyHeight={stickyHeight}
@@ -93,8 +98,6 @@ const ScrollContainerIos = forwardRef((props, ref) => {
 });
 
 ScrollContainerIos.defaultProps = {
-    containerHeight: 0,
-    containerWidth: 0,
     Header: ()=>{},
     Tab: ()=>{},
     PageContent: ()=>{},
@@ -103,13 +106,17 @@ ScrollContainerIos.defaultProps = {
 }
 
 ScrollContainerIos.propTypes = {
-    containerHeight: PropTypes.number.isRequired,
-    containerWidth: PropTypes.number.isRequired,
     Header: PropTypes.func.isRequired,
     data: PropTypes.array.isRequired,
     Tab: PropTypes.func.isRequired,
     PageContent: PropTypes.func.isRequired,
     onPageChange: PropTypes.func,
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    }
+})
 
 export default ScrollContainerIos;
