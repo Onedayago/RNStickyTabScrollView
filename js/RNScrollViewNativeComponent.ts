@@ -16,6 +16,9 @@ export interface NativeProps extends ViewProps {
     width: Float,
     height: Float,
     scrollEnable?: boolean,
+    scrollUp: boolean,
+    scrollDown: boolean,
+    onScroll: DirectEventHandler<ScrollEvent>,
 }
 
 export default codegenNativeComponent<NativeProps>(

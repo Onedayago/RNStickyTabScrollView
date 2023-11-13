@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property MyScrollView *scrollView;
 @property (readwrite) NSMutableArray *containerScrollView;
 @property RNScrollView *parentView;
+@property Boolean scrollEnable;
 
 
 - (void)setContentOffset:(float) x  y:(float)y;

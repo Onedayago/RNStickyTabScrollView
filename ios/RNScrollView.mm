@@ -32,6 +32,8 @@ using namespace facebook::react;
     CGFloat lastRootY;
     CGFloat stickyHeight;
     RNPageScrollView *pageScrollView;
+    Boolean scrollUp;
+    Boolean scrollDown;
 }
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
@@ -113,10 +115,22 @@ using namespace facebook::react;
         stickyHeight = newViewProps.stickyHeight;
     }
 
+    if (oldViewProps.width != newViewProps.width || oldViewProps.height != newViewProps.height) {
+//        self.scrollView.frame = CGRectMake(0, 0, newViewProps.width, newViewProps.height);
+//        self.frame = CGRectMake(0, 0, newViewProps.width, newViewProps.height);
+    }
+
     if (oldViewProps.bounces != newViewProps.bounces) {
         self.scrollView.bounces = newViewProps.bounces;
     }
 
+    if (oldViewProps.scrollUp != newViewProps.scrollUp) {
+        scrollUp = newViewProps.scrollUp;
+    }
+
+    if (oldViewProps.scrollDown != newViewProps.scrollDown) {
+        scrollDown = newViewProps.scrollDown;
+    }
     if (oldViewProps.scrollEnable != newViewProps.scrollEnable) {
         self.scrollView.scrollEnabled = newViewProps.scrollEnable;
     }
@@ -136,6 +150,12 @@ using namespace facebook::react;
     if(stickyHeight){
         if (scrollView == self.scrollView) {
 
+            if(_eventEmitter){
+                std::dynamic_pointer_cast<const RNScrollViewEventEmitter>(_eventEmitter)->onScroll(RNScrollViewEventEmitter::OnScroll{
+                x: scrollView.contentOffset.x,
+                y: scrollView.contentOffset.y,
+                });
+            }
             if(self.scrollView.contentOffset.y <= stickyHeight && self.scrollView.contentOffset.y >= 0){
                 return;
             }
@@ -160,9 +180,12 @@ using namespace facebook::react;
     }
 }
 
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-//    pageScrollView.scrollView.scrollEnabled = false;
+    if(pageScrollView.scrollEnable){
+        pageScrollView.scrollView.scrollEnabled = false;
+    }
     if (scrollView == self.scrollView) {
         lastRootY = self.scrollView.contentOffset.y;
     }
@@ -177,7 +200,9 @@ using namespace facebook::react;
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-//    pageScrollView.scrollView.scrollEnabled = true;
+    if(pageScrollView.scrollEnable){
+        pageScrollView.scrollView.scrollEnabled = true;
+    }
 }
 
 - (void)prepareForRecycle{

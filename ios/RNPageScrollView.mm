@@ -43,6 +43,7 @@ using namespace facebook::react;
       self.scrollView.showsVerticalScrollIndicator = false;
       self.scrollView.showsHorizontalScrollIndicator = false;
       self.scrollView.scrollEnabled = false;
+      self.scrollEnalbe = false;
   }
 
   return self;
@@ -64,11 +65,16 @@ using namespace facebook::react;
 
     if (oldViewProps.scrollEnable != newViewProps.scrollEnable) {
         self.scrollView.scrollEnabled = newViewProps.scrollEnable;
+        self.scrollEnable = newViewProps.scrollEnable;
     }
 
     if (oldViewProps.showIndicator != newViewProps.showIndicator) {
         self.scrollView.showsVerticalScrollIndicator = newViewProps.showIndicator;
         self.scrollView.showsHorizontalScrollIndicator = newViewProps.showIndicator;
+    }
+
+    if (oldViewProps.width != newViewProps.width || oldViewProps.height != newViewProps.height) {
+        self.scrollView.frame = CGRectMake(0, 0, newViewProps.width, newViewProps.height);
     }
 
   [super updateProps:props oldProps:oldProps];

@@ -17,15 +17,15 @@ public class NestedScrollView extends androidx.core.widget.NestedScrollView {
 
     private float maxScrollHeight = 0;
 
-    private String mOverflow = "hidden";
+    private boolean scrollUp = true;
 
-    private OverScroller mScroller;
+    private boolean scrollDown = true;
+
 
     private String TAG = "NestedScrollView";
 
     public NestedScrollView(@NonNull Context context) {
         super(context);
-        mScroller = new OverScroller(context);
     }
 
     @Override
@@ -49,13 +49,14 @@ public class NestedScrollView extends androidx.core.widget.NestedScrollView {
             boolean headerScrollDown = dy < 0 && getScrollY() > 0;
 
             //如果 scrollview 可以滑动，则去消费滑动
-            if (headerScrollUp || headerScrollDown) {
+            if ((headerScrollUp&&scrollUp) || (headerScrollDown&&scrollDown)) {
                 scrollBy(0, dy);
                 consumed[1] = dy;
                 Log.d(TAG, "consume");
             }
         }
     }
+
 
 
     @Override
@@ -73,5 +74,13 @@ public class NestedScrollView extends androidx.core.widget.NestedScrollView {
 
     public void setStickyHeight(float value) {
         this.maxScrollHeight = DensityUtil.dip2px(getContext(), value);
+    }
+
+    public void setScrollUp(Boolean value) {
+        this.scrollUp = value;
+    }
+
+    public void setScrollDown(Boolean value) {
+        this.scrollDown = value;
     }
 }

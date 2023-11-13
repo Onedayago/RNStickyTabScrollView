@@ -7,7 +7,7 @@
 
 
 ### 使用教程
-    yarn add https://github.com/Onedayago/RNStickyTabScrollView
+    yarn add RNStickyTabScrollView
     cd ios 
     pod install
 ### 使用demo
@@ -186,15 +186,17 @@
 
 ### 组件属性
 
-| Prop            | Default | TYPE | Description |
-|-----------------|---------|------|-------------|
-| data            | 无       | 数组   | 分页内容        |
-| containerHeight | 无       | 数字   | 容器总高度       |
-| containerWidth  | 无       | 数字   | 容器总宽度       |
-| Header          | 无       | 组件   | 顶部组件        |
-| Tab             | 无       | 组件   | 渲染自定义Tab    |
-| PageContent     | 无       | 组件   | 渲染分页内容      |
-| onPageChange    | 无       | 函数   | 页面切换回调      |
+| Prop         | Default | TYPE | Description |
+|--------------|---------|------|-------------|
+| data         | []      | 数组   | 分页内容        |
+| headTop      | 0       | 数字   | 顶部吸顶留空      |
+| scrollEnable | true    | 布尔   | 是否可以滚动切换tab |
+| Header       | 无       | 组件   | 顶部组件        |
+| Tab          | 无       | 组件   | 渲染自定义Tab    |
+| PageContent  | 无       | 组件   | 渲染分页内容      |
+| onPageChange | 无       | 函数   | 页面切换回调      |
+| scrollDown   | true    | 布尔   | 下滑是否吸顶先滑动   |
+| scrollUp     | true    | 布尔   | 上滑是否吸顶先滑动   |
 
 
 

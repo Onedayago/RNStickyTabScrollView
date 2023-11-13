@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const ScrollContainerIos = forwardRef((props, ref) => {
 
-    const {Header, data, Tab, PageContent, onPageChange} = props;
+    const {Header, data, Tab, PageContent, onPageChange, scrollEnable, scrollDown, scrollUp, onTopScroll, headTop} = props;
     const [stickyHeight, setStickyHeight] = useState(0);
     const [tabHeight, setTabHeight] = useState(0);
     const [containerWidth, setW] = useState(0);
@@ -34,8 +34,8 @@ const ScrollContainerIos = forwardRef((props, ref) => {
 
     const renderPage = (item, index) => {
         return(
-            <View style={{width: containerWidth, height: containerHeight-tabHeight, overflow: 'hidden'}}  key={index}>
-                <RNScrollView style={{width: containerWidth, height: containerHeight-tabHeight}} >
+            <View style={{width: containerWidth, height: containerHeight-tabHeight-headTop, overflow: 'hidden'}}  key={index}>
+                <RNScrollView style={{width: containerWidth, height: containerHeight-tabHeight-headTop}} >
                     <View collapsable={false}>
                         {PageContent?.(item, index)}
                     </View>
@@ -49,15 +49,15 @@ const ScrollContainerIos = forwardRef((props, ref) => {
         return(
             <ScrollView
                 horizontal={true}
-                pagingEnabled={false}
-                scrollEnabled={false}
+                pagingEnabled={true}
+                scrollEnabled={scrollEnable}
                 showsHorizontalScrollIndicator={false}
                 ref={tabScroll}
                 onMomentumScrollEnd={(e)=>{
                     onPageChange(Math.round(e.nativeEvent.contentOffset.x/containerWidth));
                 }}
             >
-                <View style={{flexDirection: 'row', height: containerHeight-tabHeight}}>
+                <View style={{flexDirection: 'row', height: containerHeight-tabHeight-headTop}}>
                     {
                         data.map((item, index)=>{
                             return renderPage(item, index);
@@ -85,9 +85,12 @@ const ScrollContainerIos = forwardRef((props, ref) => {
         }}>
             <RNScrollView
                 style={{width: containerWidth, height: containerHeight}}
-                stickyHeight={stickyHeight}
-                showsIndicator={false}
-                bounce={false}
+                stickyHeight={stickyHeight-headTop}
+                showIndicator={false}
+                bounces={false}
+                scrollDown={scrollDown}
+                scrollUp={scrollUp}
+                onScroll={onTopScroll}
             >
                 <View  collapsable={false}>
                     {renderHeader()}
@@ -105,6 +108,11 @@ ScrollContainerIos.defaultProps = {
     PageContent: ()=>{},
     data: [],
     onPageChange: ()=>{},
+    scrollEnable: false,
+    scrollUp: true,
+    scrollDown: true,
+    onTopScroll: ()=>{},
+    headTop: 0,
 }
 
 ScrollContainerIos.propTypes = {
@@ -113,6 +121,11 @@ ScrollContainerIos.propTypes = {
     Tab: PropTypes.func.isRequired,
     PageContent: PropTypes.func.isRequired,
     onPageChange: PropTypes.func,
+    scrollEnable: PropTypes.bool,
+    scrollUp: PropTypes.bool,
+    scrollDown: PropTypes.bool,
+    onTopScroll: PropTypes.func,
+    headTop: PropTypes.number,
 }
 
 const styles = StyleSheet.create({
