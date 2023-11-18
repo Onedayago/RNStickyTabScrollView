@@ -41,7 +41,6 @@ public class NestedScrollView extends androidx.core.widget.NestedScrollView {
     public void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
         super.onNestedPreScroll(target, dx, dy, consumed, type);
         //如果最大可滚动距离大于 0 则表示 scrollview 可以滚动，则去先消费用户滑动
-        Log.d(TAG, String.valueOf(getScrollY()));
         if(this.maxScrollHeight > 0){
             //判断用户是否是向上滑动，并且没有超出 scrollview 可滑动的最大距离
             boolean headerScrollUp = dy > 0 && getScrollY() < this.maxScrollHeight;
@@ -52,7 +51,6 @@ public class NestedScrollView extends androidx.core.widget.NestedScrollView {
             if ((headerScrollUp&&scrollUp) || (headerScrollDown&&scrollDown)) {
                 scrollBy(0, dy);
                 consumed[1] = dy;
-                Log.d(TAG, "consume");
             }
         }
     }

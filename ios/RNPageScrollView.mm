@@ -7,14 +7,12 @@
 #import <react/renderer/components/RNScrollViewSpecs/Props.h>
 #import <react/renderer/components/RNScrollViewSpecs/RCTComponentViewHelpers.h>
 #import "RCTFabricComponentsPlugins.h"
-#import "RCTScrollViewComponentView.h"
+
 
 using namespace facebook::react;
 
 
 @interface RNPageScrollView () <RCTRNPageScrollViewViewProtocol, UIScrollViewDelegate>
-
-
 
 @end
 
@@ -32,18 +30,18 @@ using namespace facebook::react;
   if (self = [super initWithFrame:frame]) {
      static const auto defaultProps = std::make_shared<const RNPageScrollViewProps>();
      _props = defaultProps;
-      self.scrollView = [[MyScrollView alloc] initWithFrame:self.bounds];
-      self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-      self.contentView = self.scrollView;
-      self.scrollView.pagingEnabled = false;
-      self.scrollView.bounces = false;
-      self.scrollView.delegate = self;
-      self.scrollView.directionalLockEnabled = true;
-      self.containerScrollView = [[NSMutableArray alloc]init];
-      self.scrollView.showsVerticalScrollIndicator = false;
-      self.scrollView.showsHorizontalScrollIndicator = false;
-      self.scrollView.scrollEnabled = false;
-      self.scrollEnalbe = false;
+      self.rootView = [[NestScrollView alloc] initWithFrame:self.frame];
+      self.rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      self.contentView = self.rootView;
+      self.rootView.pagingEnabled = true;
+      self.rootView.directionalLockEnabled = true;
+      self.rootView.delegate = self;
+      self.childView = [[NSMutableArray alloc]init];
+      self.rootView.bounces = defaultProps->bounces;
+      self.rootView.showsVerticalScrollIndicator = defaultProps->showIndicator;
+      self.rootView.showsHorizontalScrollIndicator = defaultProps->showIndicator;
+      self.rootView.scrollEnabled = defaultProps->scrollEnable;
+      self.scrollEnable = defaultProps->scrollEnable;
   }
 
   return self;
@@ -56,38 +54,41 @@ using namespace facebook::react;
   const auto &newViewProps = *std::static_pointer_cast<RNPageScrollViewProps const>(props);
 
   if (oldViewProps.contentWidth != newViewProps.contentWidth) {
-      self.scrollView.contentSize = CGSizeMake(newViewProps.contentWidth, self.frame.size.height);
+      self.rootView.contentSize = CGSizeMake(newViewProps.contentWidth, self.frame.size.height);
   }
 
     if (oldViewProps.bounces != newViewProps.bounces) {
-        self.scrollView.bounces = newViewProps.bounces;
+        self.rootView.bounces = newViewProps.bounces;
     }
 
     if (oldViewProps.scrollEnable != newViewProps.scrollEnable) {
-        self.scrollView.scrollEnabled = newViewProps.scrollEnable;
+        self.rootView.scrollEnabled = newViewProps.scrollEnable;
         self.scrollEnable = newViewProps.scrollEnable;
     }
 
     if (oldViewProps.showIndicator != newViewProps.showIndicator) {
-        self.scrollView.showsVerticalScrollIndicator = newViewProps.showIndicator;
-        self.scrollView.showsHorizontalScrollIndicator = newViewProps.showIndicator;
-    }
-
-    if (oldViewProps.width != newViewProps.width || oldViewProps.height != newViewProps.height) {
-        self.scrollView.frame = CGRectMake(0, 0, newViewProps.width, newViewProps.height);
+        self.rootView.showsVerticalScrollIndicator = newViewProps.showIndicator;
+        self.rootView.showsHorizontalScrollIndicator = newViewProps.showIndicator;
     }
 
   [super updateProps:props oldProps:oldProps];
+}
+
+- (void)updateLayoutMetrics:(facebook::react::LayoutMetrics const &)layoutMetrics
+           oldLayoutMetrics:(facebook::react::LayoutMetrics const &)oldLayoutMetrics
+{
+    self.rootView.frame = CGRectMake(0, 0, layoutMetrics.frame.size.width, layoutMetrics.frame.size.height);
+    [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
 }
 
 - (void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView index:(NSInteger)index
 {
 
     if([childComponentView isKindOfClass:[RNScrollView class]]){
-        RNScrollView *scrollView = (RNScrollView *)childComponentView;
-        [self.containerScrollView addObject:scrollView];
+        RNScrollView *view = (RNScrollView *)childComponentView;
+        [self.childView addObject:view];
     }
-  [_scrollView insertSubview:childComponentView atIndex:index];
+  [self.rootView insertSubview:childComponentView atIndex:index];
 }
 
 
@@ -103,18 +104,17 @@ using namespace facebook::react;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    self.parentView.scrollView.scrollEnabled = false;
-    for(RNScrollView *myScrollView in self.containerScrollView){
-
-        myScrollView.scrollView.scrollEnabled = false;
+    self.parentView.scrollEnabled = false;
+    for(RNScrollView *view in self.childView){
+        view.rootView.scrollEnabled = false;
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    self.parentView.scrollView.scrollEnabled = true;
-    for(RNScrollView *myScrollView in self.containerScrollView){
-        myScrollView.scrollView.scrollEnabled = true;
+    self.parentView.scrollEnabled = true;
+    for(RNScrollView *view in self.childView){
+        view.rootView.scrollEnabled = true;
     }
 
 }
@@ -128,24 +128,22 @@ using namespace facebook::react;
     }
 }
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+- (void)setScroll: (bool) enable
 {
-//    if(_eventEmitter){
-//        std::dynamic_pointer_cast<const RNPageScrollViewEventEmitter>(_eventEmitter)->onScroll(RNPageScrollViewEventEmitter::OnScroll{
-//        x: scrollView.contentOffset.x,
-//        y: scrollView.contentOffset.y,
-//        });
-//    }
+    if(self.scrollEnable){
+        self.rootView.scrollEnabled = enable;
+    }
 }
 
 -(void)setContentOffset:(float) x y:(float) y
 {
     CGPoint offset = CGPointMake(x, y);
-    [self.scrollView setContentOffset:offset animated:true];
+    [self.rootView setContentOffset:offset animated:true];
 }
 
 - (void)prepareForRecycle{
-    self.scrollView.contentOffset = CGPointMake(0, 0);
+    self.rootView.contentOffset = CGPointMake(0, 0);
+    [self.childView removeAllObjects];
     [super prepareForRecycle];
 }
 

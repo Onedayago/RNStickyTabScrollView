@@ -60,16 +60,6 @@ public class NestedScrollViewManager extends ViewGroupManager<NestedScrollView> 
     }
 
     @Override
-    public void setHeight(NestedScrollView view, float value) {
-
-    }
-
-    @Override
-    public void setWidth(NestedScrollView view, float value) {
-
-    }
-
-    @Override
     public void setContentHeight(NestedScrollView view, float value) {
 
     }

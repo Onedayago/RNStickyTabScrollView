@@ -1,6 +1,6 @@
 #import <React/RCTViewComponentView.h>
 #import <UIKit/UIKit.h>
-#import "MyScrollView.h"
+#import "NestScrollView.h"
 #import "RNScrollView.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -8,13 +8,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RNPageScrollView : RCTViewComponentView
 
 
-@property MyScrollView *scrollView;
-@property (readwrite) NSMutableArray *containerScrollView;
-@property RNScrollView *parentView;
-@property Boolean scrollEnable;
+@property NestScrollView *rootView;
+@property NSMutableArray *childView;
+@property bool scrollEnable;
+@property NestScrollView *parentView;
 
 
 - (void)setContentOffset:(float) x  y:(float)y;
+
+- (void)setScroll: (bool) enable;
+
 @end
 
 

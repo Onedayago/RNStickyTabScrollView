@@ -5,7 +5,6 @@ import RNScrollView from "rn-scrollview/js/RNScrollViewNativeComponent";
 import ScrollView from "./ScrollView";
 import RNPageScrollView, {Commands} from "rn-scrollview/js/RNPageScrollViewNativeComponent";
 import PropTypes from 'prop-types';
-import {boolean, DirectEventHandler} from "react-native/Libraries/Types/CodegenTypes";
 
 const ScrollContainerIos = forwardRef((props, ref) => {
 

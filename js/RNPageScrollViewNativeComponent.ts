@@ -1,7 +1,7 @@
 import type {ViewProps} from 'ViewPropTypes';
 import type {HostComponent} from 'react-native';
 import codegenNativeComponent, {NativeComponentType} from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import {Float, boolean, DirectEventHandler} from "react-native/Libraries/Types/CodegenTypes";
+import {Float, DirectEventHandler, WithDefault} from "react-native/Libraries/Types/CodegenTypes";
 import codegenNativeCommands from "react-native/Libraries/Utilities/codegenNativeCommands";
 
 type ScrollEvent = Readonly<{
@@ -11,12 +11,10 @@ type ScrollEvent = Readonly<{
 
 export interface NativeProps extends ViewProps {
     contentWidth: Float,
-    bounces: boolean,
-    showIndicator: boolean,
-    width: Float,
-    height: Float,
+    bounces?: WithDefault<boolean, false>,
+    showIndicator?: WithDefault<boolean, false>,
     onScroll: DirectEventHandler<ScrollEvent>,
-    scrollEnable?: boolean,
+    scrollEnable?: WithDefault<boolean, false>,
 }
 
 interface NativeCommands {
