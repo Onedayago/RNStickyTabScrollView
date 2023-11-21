@@ -1,7 +1,7 @@
 
 import React, {useRef, useState, forwardRef, useImperativeHandle} from "react";
 import {Text, View, TouchableOpacity, Animated, ScrollView, StyleSheet} from "react-native";
-import RNScrollView from "rn-scrollview/js/RNScrollViewNativeComponent";
+import RNScrollView from "./RNScrollViewNativeComponent";
 import PropTypes from 'prop-types';
 
 const ScrollContainerIos = forwardRef((props, ref) => {

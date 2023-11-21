@@ -1,9 +1,9 @@
 
 import React, {useRef, useState, forwardRef, useImperativeHandle} from "react";
 import {Text, View, TouchableOpacity, Animated, StyleSheet} from "react-native";
-import RNScrollView from "rn-scrollview/js/RNScrollViewNativeComponent";
+import RNScrollView from "./RNScrollViewNativeComponent";
 import ScrollView from "./ScrollView";
-import RNPageScrollView, {Commands} from "rn-scrollview/js/RNPageScrollViewNativeComponent";
+import RNPageScrollView, {Commands} from "./RNPageScrollViewNativeComponent";
 import PropTypes from 'prop-types';
 
 const ScrollContainerIos = forwardRef((props, ref) => {
@@ -111,7 +111,7 @@ ScrollContainerIos.defaultProps = {
     scrollUp: true,
     scrollDown: true,
     onTopScroll: ()=>{},
-    headTop: 20,
+    headTop: 0,
 }
 
 ScrollContainerIos.propTypes = {

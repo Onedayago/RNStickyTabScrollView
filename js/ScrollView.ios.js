@@ -1,7 +1,7 @@
 
 import React, {useState} from "react";
 import {View} from "react-native";
-import RNScrollView from "rn-scrollview/js/RNScrollViewNativeComponent";
+import RNScrollView from "./RNScrollViewNativeComponent";
 import PropTypes from 'prop-types';
 
 const ScrollView = (props) => {
