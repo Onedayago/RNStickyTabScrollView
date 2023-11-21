@@ -239,8 +239,6 @@ using namespace facebook::react;
         child.rootView.contentOffset = CGPointMake(0, 0);
     }
 
-    [childView removeAllObjects];
-
     [super prepareForRecycle];
 }
 

@@ -143,7 +143,6 @@ using namespace facebook::react;
 
 - (void)prepareForRecycle{
     self.rootView.contentOffset = CGPointMake(0, 0);
-    [self.childView removeAllObjects];
     [super prepareForRecycle];
 }
 
