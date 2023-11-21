@@ -49,6 +49,7 @@ using namespace facebook::react;
       self.rootView.showsVerticalScrollIndicator = defaultProps->showIndicator;
       self.rootView.showsHorizontalScrollIndicator = defaultProps->showIndicator;
       self.rootView.bounces = defaultProps->bounces;
+      self.rootView.directionalLockEnabled = true;
       childView = [[NSMutableArray alloc]init];
       //初始化吸顶距离
       stickyHeight = 0;
@@ -132,7 +133,7 @@ using namespace facebook::react;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
 
-    int i = (int)pageScrollView.rootView.contentOffset.x/pageScrollView.rootView.contentSize.width;
+    int i = (int)pageScrollView.rootView.contentOffset.x/pageScrollView.rootView.frame.size.width;
     RNScrollView *view = childView[i];
     float y = view.rootView.contentSize.height - view.rootView.frame.size.height;
 
@@ -146,66 +147,24 @@ using namespace facebook::react;
                 });
             }
 
-            //判断是否是往上滚动
-            if(self.lastY < scrollView.contentOffset.y){ //往上滚动
-                //判断顶部是否可以滚动
-                if(self.rootView.contentOffset.y <= stickyHeight - 1){
-                    if(scrollUp || view.rootView.contentOffset.y == y){
-
-                    }else{
-                        if(view.rootView.contentOffset.y == 0){
-                            view.rootView.contentOffset = CGPointMake(0, 1);
-                        }
-                        self.rootView.contentOffset = CGPointMake(0, self.lastY);
-                    }
-                }else{
-                    self.rootView.contentOffset = CGPointMake(0, stickyHeight);
-                }
-            }else if(self.lastY > scrollView.contentOffset.y){ //向下滚动
-                //判断顶部是否可以向下滚动
-                if(self.rootView.contentOffset.y >= 1){
-                    if(scrollDown || view.rootView.contentOffset.y == 0){
-
-                    }else{
-                        if(view.rootView.contentOffset.y == y){
-                            view.rootView.contentOffset = CGPointMake(0, y-1);
-                        }
-                        self.rootView.contentOffset = CGPointMake(0, self.lastY);
-                    }
-                }else{
-                    self.rootView.contentOffset = CGPointMake(0, 0);
-                }
+            if(self.rootView.contentOffset.y <= stickyHeight && self.rootView.contentOffset.y >= 0){
+                return;
             }
-            self.lastY = scrollView.contentOffset.y;
+            if(scrollView.contentOffset.y > stickyHeight){
+                self.rootView.contentOffset = CGPointMake(0, stickyHeight);
+            }else{
+                self.rootView.contentOffset = CGPointMake(0, 0);
+            }
+
         } else{
-
-            //判断是否是往上滚动
-            if(view.lastY < scrollView.contentOffset.y && view.rootView.contentOffset.y != y){ //往上滚动
-                //判断顶部是否可以滚动
-                if(view.rootView.contentOffset.y <= y -1){
-                    if(!scrollUp || self.rootView.contentOffset.y == stickyHeight){
-
-                    }else{
+            for(RNScrollView *view in childView){
+                if(scrollView == view.rootView){
+                    if(self.rootView.contentOffset.y < stickyHeight && self.rootView.contentOffset.y > 0){
                         view.rootView.contentOffset = CGPointMake(0, view.lastY);
                     }
-                }else{
-                    view.rootView.contentOffset = CGPointMake(0, y);
-                    scrollView.contentOffset = CGPointMake(0, y);
-                }
-            }else if(view.lastY > scrollView.contentOffset.y){ //向下滚动
-                //判断顶部是否可以向下滚动
-                if(view.rootView.contentOffset.y >= 1){
-                    if(!scrollDown || self.rootView.contentOffset.y == 0){
-
-                    }else{
-                        view.rootView.contentOffset = CGPointMake(0, view.lastY);
-                    }
-                }else{
-                    view.rootView.contentOffset = CGPointMake(0, 0);
+                    view.lastY = scrollView.contentOffset.y;
                 }
             }
-
-            view.lastY = scrollView.contentOffset.y;
         }
     }
 }

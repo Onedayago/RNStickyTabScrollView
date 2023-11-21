@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const ScrollContainerIos = forwardRef((props, ref) => {
 
-    const {Header, data, Tab, PageContent, onPageChange, scrollEnable, scrollDown, scrollUp, onTopScroll, headTop} = props;
+    const {Header, data, Tab, PageContent, onPageChange, scrollEnable, scrollDown, scrollUp, onTopScroll, headTop, viewStyle} = props;
     const [stickyHeight, setStickyHeight] = useState(0);
     const [tabHeight, setTabHeight] = useState(0);
     const [containerWidth, setW] = useState(0);
@@ -79,7 +79,7 @@ const ScrollContainerIos = forwardRef((props, ref) => {
     }
 
     return(
-        <View style={styles.container} onLayout={(e)=>{
+        <View style={[styles.container, viewStyle]} onLayout={(e)=>{
             setW(e.nativeEvent.layout.width);
             setH(e.nativeEvent.layout.height);
         }}>
@@ -113,6 +113,7 @@ ScrollContainerIos.defaultProps = {
     scrollDown: true,
     onTopScroll: ()=>{},
     headTop: 0,
+    viewStyle: {},
 }
 
 ScrollContainerIos.propTypes = {
@@ -126,6 +127,7 @@ ScrollContainerIos.propTypes = {
     scrollDown: PropTypes.bool,
     onTopScroll: PropTypes.func,
     headTop: PropTypes.number,
+    viewStyle: PropTypes.object,
 }
 
 const styles = StyleSheet.create({
