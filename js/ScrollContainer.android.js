@@ -3,6 +3,7 @@ import React, {useRef, useState, forwardRef, useImperativeHandle} from "react";
 import {Text, View, TouchableOpacity, Animated, ScrollView, StyleSheet} from "react-native";
 import RNScrollView from "./RNScrollViewNativeComponent";
 import PropTypes from 'prop-types';
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 const ScrollContainerIos = forwardRef((props, ref) => {
 
@@ -79,26 +80,29 @@ const ScrollContainerIos = forwardRef((props, ref) => {
     }
 
     return(
-        <View style={[styles.container, viewStyle]} onLayout={(e)=>{
-            setW(e.nativeEvent.layout.width);
-            setH(e.nativeEvent.layout.height);
-        }}>
-            <RNScrollView
-                style={{width: containerWidth, height: containerHeight}}
-                stickyHeight={stickyHeight-headTop}
-                showIndicator={false}
-                bounces={false}
-                scrollDown={scrollDown}
-                scrollUp={scrollUp}
-                onScroll={onTopScroll}
-            >
-                <View  collapsable={false}>
-                    {renderHeader()}
-                    {renderTab()}
-                    {renderContent()}
-                </View>
-            </RNScrollView>
-        </View>
+        <GestureHandlerRootView style={[styles.container, viewStyle]}>
+            <View style={[styles.container, viewStyle]} onLayout={(e)=>{
+                setW(e.nativeEvent.layout.width);
+                setH(e.nativeEvent.layout.height);
+            }}>
+                <RNScrollView
+                    style={{width: containerWidth, height: containerHeight}}
+                    stickyHeight={stickyHeight-headTop}
+                    showIndicator={false}
+                    bounces={false}
+                    scrollDown={scrollDown}
+                    scrollUp={scrollUp}
+                    onScroll={onTopScroll}
+                >
+                    <View  collapsable={false} >
+                        {renderHeader()}
+                        {renderTab()}
+                        {renderContent()}
+                    </View>
+                </RNScrollView>
+            </View>
+        </GestureHandlerRootView>
+
     )
 });
 

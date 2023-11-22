@@ -122,9 +122,10 @@ public class NestedScrollViewManager extends ViewGroupManager<NestedScrollView> 
         });
     }
 
+
     @Nullable
     @Override
     public Map<String, Object> getExportedCustomDirectEventTypeConstants() {
-        return MapBuilder.of(EVENT_NAME_ONCLICK,MapBuilder.of("registrationName", EVENT_NAME_ONCLICK));
+        return MapBuilder.of("topOnScroll",MapBuilder.of("registrationName", EVENT_NAME_ONCLICK));
     }
 }
