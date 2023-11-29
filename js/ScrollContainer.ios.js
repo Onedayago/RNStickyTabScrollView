@@ -84,7 +84,7 @@ const ScrollContainerIos = forwardRef((props, ref) => {
         }}>
             <RNScrollView
                 style={{width: containerWidth, height: containerHeight}}
-                stickyHeight={(stickyHeight-headTop) < 0 ?0:stickyHeight-headTop}
+                stickyHeight={(stickyHeight-headTop) < 0 ?0:parseInt((stickyHeight-headTop).toFixed(0))}
                 showIndicator={false}
                 bounces={false}
                 contentHeight={contentHeight}
