@@ -132,11 +132,6 @@ using namespace facebook::react;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-
-    int i = (int)pageScrollView.rootView.contentOffset.x/pageScrollView.rootView.frame.size.width;
-    RNScrollView *view = childView[i];
-    float y = view.rootView.contentSize.height - view.rootView.frame.size.height;
-
     if(stickyHeight){
         if (scrollView == self.rootView) {
 
